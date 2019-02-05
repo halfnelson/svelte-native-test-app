@@ -35,6 +35,9 @@
         listView.nativeView.on(ListView.itemLoadingEvent, (args) => {
            
             let item = items[args.index]
+            if (!item) {
+                console.log("Got request for item at index that didn't exists", items, args.index, args.view ? args.view.text : null)
+            }
             if (!args.view) {
                 let dummy = new ElementNode('fragment');
                 let thisView = new Template( {

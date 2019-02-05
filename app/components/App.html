@@ -2,7 +2,7 @@
     <page.actionBar>
          <actionBar title="My Tasks" class="action-bar"/>
     </page.actionBar>
-         <TabView height="100%" androidTabsPosition="bottom">
+         <TabView height="100%" androidTabsPosition="bottom" selectedTabTextColor="#53ba82" tabTextFontSize="15">
             <TabViewItem title="To Do">
               <!-- Positions an input field, a button, and the list of tasks in a vertical stack. -->
               <stackLayout orientation="vertical" width="100%" height="100%">
@@ -13,17 +13,17 @@
                   <button col="1" row="0" text="Add task" on:tap="{onButtonTap}" />
                 </gridLayout>
       
-                <ListView class="list-group"  style="height:70%" items={todos} onItemTap="{onItemTap}" >
+                <ListView class="list-group"  style="height:70%" items={todos} onItemTap="{onItemTap}" separatorColor="transparent"  >
                   <ListItemTemplate let:item>
-                    <label text="{item.name}" class="list-group-item-heading" textWrap="true" />
+                    <label text="{item.name}" class="active-task" textWrap="true" />
                   </ListItemTemplate>
                 </ListView>
               </stackLayout>
             </TabViewItem>
             <TabViewItem title="Completed">
-              <ListView class="list-group" items={dones} onItemTap="{onDoneTap}" style="height:75%">
+              <ListView class="list-group" items={dones} onItemTap="{onDoneTap}" style="height:75%" separatorColor="transparent">
                 <ListItemTemplate let:item>
-                  <label text="{item.name}" class="list-group-item-heading" textWrap="true" />
+                  <label text="{item.name}" class="completed-task" textWrap="true"  />
                 </ListItemTemplate>
               </ListView>
             </TabViewItem>
@@ -36,22 +36,16 @@
     import TabView from "./TabView.html"
     import TabViewItem from "./TabViewItem.html"
     import { action } from "tns-core-modules/ui/dialogs"
-    let dones = [{name: "fix this"}];
-    let todos = [{name:"clean shed"}];
+    let dones = [{name: "Lists"}, {name: "Tabs"}, {name: "Action Bars"}];
+    let todos = [{name:"working To-do demo"}];
     let textFieldValue = "";
 
-
-    const spam = (args) => {
-      console.log("got txt event", args.value)
-    }
     const onItemTap = function(args) {
-      console.log("item tap");
-       action('What do you want to do with this task?', 'Cancel', ['Mark completed', 'Delete forever']) 
+        action('What do you want to do with this task?', 'Cancel', ['Mark completed', 'Delete forever']) 
         .then(result => { 
-          console.log(result); // Logs the selected option for debugging.
-          switch (result) {
+           switch (result) {
             case 'Mark completed': 
-              dones = [ args.item, ...dones ]; // Places the tapped active task at the top of the completed tasks.
+              dones = [ todos[args.index], ...dones ]; // Places the tapped active task at the top of the completed tasks.
               todos = todos.filter((v,idx)=> idx != args.index); // Removes the tapped active  task.
               break;
             case 'Delete forever':
@@ -66,10 +60,9 @@
       const onDoneTap = function(args) { 
         action('What do you want to do with this task?', 'Cancel', ['Mark to do', 'Delete forever'])
             .then(result => { 
-            console.log(result); // Logs the selected option for debugging. 
             switch (result) { 
                 case 'Mark to do':
-                todos = [ args.item, ...todos ]; // Places the tapped active task at the top of the completed tasks.
+                todos = [ dones[args.index], ...todos ]; // Places the tapped active task at the top of the completed tasks.
                 dones = dones.filter((v,idx)=> idx != args.index); // Removes the tapped active  task.
                 break; 
                 case 'Delete forever': 
@@ -82,9 +75,7 @@
       }
 
       const onButtonTap = () => {
-        console.log("button tapped");
         if (textFieldValue === "") return; // Prevents users from entering an empty string.
-        console.log("New task added: " + textFieldValue + "."); // Logs the newly added task in the console for debugging.
         todos = [ { name: textFieldValue },  ...todos ]
         textFieldValue = ""; // Clears the text field so that users can start adding new tasks immediately.
       }
@@ -93,6 +84,47 @@
 </script>
 
 <style>
+TextField {
+  font-size: 20;
+  color: #53ba82;
+  margin-top: 10;
+  margin-bottom: 10;
+  margin-right: 5;
+  margin-left: 20;
+}
+
+Button { 
+  font-size: 16; 
+  font-weight: bold; 
+  color: white; 
+  background-color: #53ba82; 
+  height: 40;
+  margin-top: 10; 
+  margin-bottom: 10; 
+  margin-right: 10; 
+  margin-left: 10; 
+  border-radius: 20px; 
+}
+
+
+.completed-task {
+  font-size: 20;
+  color: #d3d3d3;
+  margin-left: 20;
+  padding-top: 5;
+  padding-bottom: 10;
+  text-decoration: line-through;
+}
+
+.active-task {
+  font-size: 20;
+  font-weight: bold;
+  color: #53ba82;
+  margin-left: 20;
+  padding-top: 5;
+  padding-bottom: 10;
+}
+
   .home-panel {
     vertical-align: center;
     font-size: 20;

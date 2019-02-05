@@ -43,7 +43,7 @@
           console.log(result); // Logs the selected option for debugging.
           switch (result) {
             case 'Mark completed': 
-              dones = [ args.item, ...dones ]; // Places the tapped active task at the top of the completed tasks.
+              dones = [ todos[args.index], ...dones ]; // Places the tapped active task at the top of the completed tasks.
               todos = todos.filter((v,idx)=> idx != args.index); // Removes the tapped active  task.
               break;
             case 'Delete forever':
@@ -61,7 +61,7 @@
             console.log(result); // Logs the selected option for debugging. 
             switch (result) { 
                 case 'Mark to do':
-                todos = [ args.item, ...todos ]; // Places the tapped active task at the top of the completed tasks.
+                todos = [ dones[args.index], ...todos ]; // Places the tapped active task at the top of the completed tasks.
                 dones = dones.filter((v,idx)=> idx != args.index); // Removes the tapped active  task.
                 break; 
                 case 'Delete forever': 
