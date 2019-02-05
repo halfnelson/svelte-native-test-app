@@ -1,0 +1,15 @@
+<script>
+    import { onMount, getContext } from 'svelte';
+    import { AsComponent } from 'svelte-native';
+    import { TEMPLATE } from './ListView.html';
+    let Component;
+    let { setTemplate } = getContext(TEMPLATE);
+    onMount(() => {
+        setTemplate(Component);
+    })
+</script>
+
+<AsComponent let:props bind:component={Component}>
+    <slot item={props.item}/>
+</AsComponent>
+

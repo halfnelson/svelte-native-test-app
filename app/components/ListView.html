@@ -1,0 +1,61 @@
+<script context="module">
+     export const TEMPLATE = {};
+</script>
+
+<script>
+    import { setContext, onMount, onDestroy } from 'svelte';
+    import { ListView } from 'tns-core-modules/ui/list-view';
+    import { ElementNode } from 'svelte-native';
+    import { cleanProps } from './util.js'
+    export let Template = null;
+    export let items = [];
+    let dirtyProps
+    let listView;
+    let props;
+    $: props = cleanProps(dirtyProps);
+
+
+    setContext(TEMPLATE, {
+        setTemplate: template => {
+            Template = template;
+        }
+    })
+    onDestroy(() => {
+        if (props.onItemTap) {
+            listView.nativeView.off(ListView.itemTapEvent, props.onItemTap);
+        }
+    })
+
+    onMount(()=> {
+
+        if (props.onItemTap) {
+            listView.nativeView.on(ListView.itemTapEvent, props.onItemTap);
+        }
+
+        listView.nativeView.on(ListView.itemLoadingEvent, (args) => {
+           
+            let item = items[args.index]
+            if (!args.view) {
+                let dummy = new ElementNode('fragment');
+                let thisView = new Template( {
+                    target: dummy,
+                    props: {
+                        item: item
+                    }
+                });
+                let nativeEl = dummy.firstElement().nativeView;
+                nativeEl.__SvelteComponent__ = thisView;
+
+                // Create label if it is not already created.
+                args.view = nativeEl;
+            } else {
+                let component = args.view.__SvelteComponent__.$set({ item: item })
+            }
+        });
+    })
+
+</script>
+<svelte:options bind:props={dirtyProps} />
+
+<slot></slot>
+<listView {...props} items={items} bind:this={listView} ></listView>

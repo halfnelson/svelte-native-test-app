@@ -1,0 +1,14 @@
+<script>
+    import { onMount, getContext } from 'svelte';
+    import { TABS } from './TabView.html';
+    let frag;
+    export let title = "Tab"
+    let { addItem } = getContext(TABS);
+    
+    let tabNum = addItem(title, () => frag.firstElement().nativeView);
+    onMount(()=>{
+        console.log("tab view item mounted", tabNum);
+    })
+</script>
+<fragment bind:this={frag}><slot></slot></fragment>
+    
