@@ -42,25 +42,13 @@
 		}
 	}
 
-
-
     setContext(TEMPLATE, {
         setTemplate: template => {
             Template = template;
         }
     })
-    onDestroy(() => {
-        if (props.onItemTap) {
-         //   listView.nativeView.off(ListView.itemTapEvent, props.onItemTap);
-        }
-    })
 
     onMount(()=> {
-
-        if (props.onItemTap) {
-        //    listView.nativeView.on(ListView.itemTapEvent, props.onItemTap);
-        }
-
         listView.nativeView.on(ListView.itemLoadingEvent, (args) => {
            
             let item = items[args.index]
@@ -88,7 +76,8 @@
 
 
 </script>
-<svelte:options bind:props={dirtyProps} />
 
-<slot></slot>
-<listView {...props} items={items} bind:this={listView} use:proxyEvents={outer_events}></listView>
+<svelte:options bind:props={dirtyProps} />
+<listView {...props} items={items} bind:this={listView} use:proxyEvents={outer_events}>
+    <slot></slot>
+</listView>
