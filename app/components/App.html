@@ -13,18 +13,14 @@
                   <button col="1" row="0" text="Add task" on:tap="{onButtonTap}" />
                 </gridLayout>
       
-                <ListView class="list-group"  style="height:70%" items={todos} on:itemTap="{onItemTap}" separatorColor="transparent"  >
-                  <ListItemTemplate let:item>
+                <ListView class="list-group"  style="height:70%" items={todos} on:itemTap="{onItemTap}" separatorColor="transparent" let:item>
                     <label text="{item.name}" class="active-task" textWrap="true" />
-                  </ListItemTemplate>
                 </ListView>
               </stackLayout>
             </TabViewItem>
             <TabViewItem title="Completed">
-              <ListView class="list-group" items={dones} on:itemTap="{onDoneTap}" style="height:75%" separatorColor="transparent">
-                <ListItemTemplate let:item>
+              <ListView class="list-group" items={dones} on:itemTap="{onDoneTap}" style="height:75%" separatorColor="transparent" let:item>
                   <label text="{item.name}" class="completed-task" textWrap="true"  />
-                </ListItemTemplate>
               </ListView>
             </TabViewItem>
           </TabView>
@@ -32,12 +28,15 @@
 
 <script>
     import ListView from "./ListView.html"
-    import ListItemTemplate from "./ListItemTemplate.html"
     import TabView from "./TabView.html"
     import TabViewItem from "./TabViewItem.html"
     import { action } from "tns-core-modules/ui/dialogs"
     let dones = [{name: "Lists"}, {name: "Tabs"}, {name: "Action Bars"}];
     let todos = [{name:"working To-do demo"}];
+    let lots = []
+    for (let i = 0; i < 1000; i++) {
+      lots.push(i);
+    }
     let textFieldValue = "";
 
     const onItemTap = function(args) {
