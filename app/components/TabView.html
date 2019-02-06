@@ -13,17 +13,15 @@
     $: props = cleanProps(dirtyProps);
 
     setContext(TABS, {
-        addItem: (title, getView) => {
-            return items.push({title, getView});
+        addItem: (getView) => {
+            return items.push(getView);
         }
     })
 
     onMount(()=>{
         let tabItems = [];
-        for(let { title, getView} of items) {
-            let tvi = new TabViewItem();
-            tvi.title = title;
-            tvi.view = getView();
+        for(let getView of items) {
+            let tvi = getView();
             console.log("adding",tvi.title, tvi.view);
             tabItems.push(tvi);
         }
