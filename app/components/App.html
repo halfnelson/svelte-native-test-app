@@ -27,9 +27,7 @@
 </page>
 
 <script>
-    import ListView from "./ListView.html"
-    import TabView from "./TabView.html"
-    import TabViewItem from "./TabViewItem.html"
+    import { ListView, TabView, TabViewItem } from "svelte-native/dist/components"
     import { action } from "tns-core-modules/ui/dialogs"
     let dones = [{name: "Lists"}, {name: "Tabs"}, {name: "Action Bars"}];
     let todos = [{name:"working To-do demo"}];
