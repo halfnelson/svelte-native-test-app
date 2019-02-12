@@ -1,6 +1,6 @@
-# NativeScript-Vue Application
+# NativeScript-Svelte Application
 
-> A native application built with NativeScript-Vue
+> A native application built with Svelte-Native
 
 ## Usage
 
