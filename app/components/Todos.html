@@ -1,5 +1,7 @@
 <page xmlns="tns" >
-    <actionBar title="My Tasks" class="action-bar"/>
+    <actionBar title="My Tasks" class="action-bar">
+        <navigationButton text="Go Back" android.systemIcon="ic_menu_back" on:tap={goBack} />
+    </actionBar>
 
     <tabView height="100%" androidTabsPosition="bottom" selectedTabTextColor="#53ba82" tabTextFontSize="15">
       <tabViewItem title="To Do">
@@ -36,12 +38,14 @@
     import { AsComponent } from "svelte-native/components"
     import { componentAsListItem } from "svelte-native/svelte-helpers"
     import { action } from "tns-core-modules/ui/dialogs"
+    import { goBack } from "svelte-native"
     let dones = [{name: "Lists"}, {name: "Tabs"}, {name: "Action Bars"}];
     let todos = [{name:"working To-do demo"}];
     let textFieldValue = "";
     let completedItemTemplate, todoItemTemplate;
 
     const onItemTap = function(args) {
+        debugger;
         action('What do you want to do with this task?', 'Cancel', ['Mark completed', 'Delete forever']) 
         .then(result => { 
            switch (result) {

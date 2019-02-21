@@ -1,5 +1,5 @@
-import App from './components/App.html'
-
+import Main from './components/Main.html'
 import { svelteNative } from 'svelte-native'
 
-svelteNative(App, {msg: "from base app"});
+svelteNative(Main, {})
+
