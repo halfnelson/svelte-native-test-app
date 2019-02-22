@@ -2,12 +2,14 @@
     <actionBar title="Test App"></actionBar>
     <stackLayout>
         <button on:tap="{nav}">Go to Todos</button>
+        <button on:tap="{showmodal}">Show a modal</button>
         <button on:tap="{() => toggle = !toggle}">Toggle a Label</button>
         {#if toggle}
             <label class="test-label" transition:fade="{{duration: 400}}" >This is a green test label</label>
         {/if}
     </stackLayout>
 </page>
+
 
 <style>
     .test-label {
@@ -18,8 +20,13 @@
 <script>
     import { fade } from 'svelte/transition'
     import Todos from './Todos.html'
-    import { navigate } from 'svelte-native'
+    import Modal from './Modal.html'
+    import { navigate, showModal } from 'svelte-native'
     let toggle = false;
+ 
+    const showmodal = () => {
+        showModal({ page: Modal,  fullscreen: true})
+    }
 
     const nav = () => {
         navigate({
