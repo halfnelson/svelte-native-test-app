@@ -14,10 +14,10 @@
     }
   },
   "dependencies": {
-    "tns-core-modules": "^5.0.2",
-    "svelte-native": "1.0.0"
+    "tns-core-modules": "^5.0.2"
   },
   "devDependencies": {
+    "svelte-native": "1.0.0",
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
